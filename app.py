@@ -112,7 +112,7 @@ def chatbot():
 
         # Delete the model adapter after generating the response
         new_model_adapter.delete()
-geodata = pd.read_csv("/content/merged_data.csv")        
+geodata = pd.read_csv("/content/ADDRESS ONLY Property_Assessment_Data__Current_Calendar_Year_ - Property_Assessment_Data__Current_.csv")        
 def neighbourhood_mapping():
     st.title("Neighbourhood Mapping")
 
@@ -142,31 +142,13 @@ def neighbourhood_mapping():
             st.plotly_chart(fig)
     else:
         st.write("Please enter a neighborhood to generate the map.")
-def chatbot():
-    st.title("Interactive Food Drive Assistant")
-    st.write("Ask a question about the Food Drive!")
 
-    with Gradient() as gradient:
-        base_model = gradient.get_base_model(base_model_slug="nous-hermes2")
-        new_model_adapter = base_model.create_model_adapter(name="interactive_food_drive_model")
-
-        user_input = st.text_input("Ask your question:")
-        if user_input and user_input.lower() not in ['quit', 'exit']:
-            sample_query = f"### Instruction: {user_input} \n\n### Response:"
-            st.markdown(f"Asking: {sample_query}")
-
-            # before fine-tuning
-            completion = new_model_adapter.complete(query=sample_query, max_generated_token_count=100).generated_output
-            st.markdown(f"Generated: {completion}")
-
-        # Delete the model adapter after generating the response
-        new_model_adapter.delete()
 
 
 # Main App Logic
 def main():
     st.sidebar.title("Food Drive App")
-    app_page = st.sidebar.radio("Select a Page", ["Dashboard", "Stakeholders","Data Collection","EDA", "ML Modeling", "Neighbourhood Mapping","Chatbot"])
+    app_page = st.sidebar.radio("Select a Page", ["Dashboard", "Stakeholders","Data Collection","EDA", "ML Modeling", "Neighbourhood Mapping"])
 
     if app_page == "Dashboard":
         dashboard()
@@ -180,8 +162,6 @@ def main():
         neighbourhood_mapping()
     elif app_page == "Data Collection":
         data_collection()
-    elif app_page == "Chatbot":
-        chatbot()
 
 if __name__ == "__main__":
     main()
